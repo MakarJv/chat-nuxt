@@ -1,13 +1,13 @@
 <template>
   <div class="c-wrap">
-    <div class="c-chat">
-        <Message
-          v-for="m in messages"
-          :key="m.text"
-          :name="m.name"
-          :text="m.text"
-          owner
-        />
+    <div class="c-chat" ref="block">
+      <Message
+        v-for="m in messages"
+        :key="m.text"
+        :name="m.name"
+        :text="m.text"
+        :owner="m.id === user.id"
+      />
     </div>
     <div class="c-form">
       <ChatForm/>
@@ -16,23 +16,24 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
-import Message from '../components/Message'
+import { mapState } from "vuex";
+import Message from "../components/Message";
 import ChatForm from "../components/ChatForm";
-
 export default {
-  middleware: ['chat'],
+  middleware: ["chat"],
   head() {
     return {
-      title: `Room ${this.user.room}`
-    }
+      title: `Комната ${this.user.room}`
+    };
   },
   components: {
     Message, ChatForm
   },
-  computed: mapState(["user", "messages"])
-}
+  computed:
+    mapState(["user", "messages"]),
+};
 </script>
+
 <style scoped>
 .c-wrap {
   height: 100%;
@@ -60,3 +61,5 @@ export default {
   overflow-y: auto;
 }
 </style>
+
+
